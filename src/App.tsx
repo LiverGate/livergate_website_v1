@@ -161,7 +161,7 @@ const Hero = ({ onConsultClick }: { onConsultClick: () => void }) => {
             transition={{ delay: 0.8, duration: 1 }}
             className="text-base md:text-2xl text-gray-500 max-w-4xl mx-auto mb-10 leading-relaxed px-2 md:px-4"
           >
-            <span className="block">飲食店に必要なインフラ、設備、集客採用サービスを比較検討し</span>
+            <span className="block">飲食店開業に必要なインフラ、設備、集客採用サービスを比較検討し</span>
             <span className="block">お客様にあったサービスを無料で紹介させていただきます。</span>
           </motion.p>
           <motion.div 
@@ -594,7 +594,7 @@ const AboutSection = () => {
               <div className="space-y-4 md:space-y-6">
                 <div className="flex flex-col sm:flex-row border-b border-white/10 pb-4 gap-1 sm:gap-0">
                   <span className="w-full sm:w-32 text-gray-400 text-sm font-medium">会社名</span>
-                  <span className="font-bold text-sm md:text-base">株式会社LiverGate</span>
+                  <span className="font-bold text-sm md:text-base">株式会社LiverGate（ライバーゲート）</span>
                 </div>
                 <div className="flex flex-col sm:flex-row border-b border-white/10 pb-4 gap-1 sm:gap-0">
                   <span className="w-full sm:w-32 text-gray-400 text-sm font-medium">事業内容</span>
@@ -708,7 +708,7 @@ const LineContactView = ({ onBack }: { onBack: () => void }) => {
         <div className="aspect-square w-64 mx-auto mb-8 bg-gray-50 rounded-3xl flex items-center justify-center border-2 border-dashed border-gray-200 p-4">
           <img 
             src="https://qr-official.line.me/gs/M_378igbsi_BW.png?oat_content=qr" 
-            alt="LINE QR Code" 
+            alt="カイギョーズ公式LINE QRコード" 
             className="w-full h-full object-contain rounded-2xl"
             referrerPolicy="no-referrer"
           />
@@ -855,6 +855,23 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-blue-100 selection:text-blue-900">
+      <script type="application/ld+json">
+        {JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "Service",
+          "name": "カイギョーズ",
+          "alternateName": ["Kaygyoz", "飲食店開業支援"],
+          "provider": {
+            "@type": "Organization",
+            "name": "株式会社LiverGate",
+            "alternateName": ["LiverGate", "ライバーゲート"],
+            "url": "https://ais-pre-k42smc2cprknbmm6qaajio-474926124575.asia-east1.run.app/"
+          },
+          "description": "株式会社LiverGate（ライバーゲート）が運営する飲食店オーナー様のための専門コンシェルジュサービス。飲食店の開業や運営に必要なインフラ・固定費の最適化をサポート。",
+          "areaServed": "JP",
+          "serviceType": "飲食店支援コンシェルジュ"
+        })}
+      </script>
       <Navbar onLinkClick={handleLinkClick} />
       <main>
         <Hero onConsultClick={() => setView('contact')} />
