@@ -1,15 +1,15 @@
 import React, { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'motion/react';
-import { 
-  Menu, 
-  X, 
-  ChevronRight, 
-  Wifi, 
-  CreditCard, 
-  Zap, 
-  LayoutGrid, 
-  Smartphone, 
-  Settings, 
+import {
+  Menu,
+  X,
+  ChevronRight,
+  Wifi,
+  CreditCard,
+  Zap,
+  LayoutGrid,
+  Smartphone,
+  Settings,
   Coins,
   CheckCircle2,
   Users,
@@ -17,7 +17,15 @@ import {
   MessageSquare,
   ClipboardList,
   ArrowRight,
-  ArrowLeft
+  ArrowLeft,
+  Droplets,
+  Utensils,
+  Truck,
+  PenTool,
+  Building2,
+  FileCheck,
+  Megaphone,
+  Mail
 } from 'lucide-react';
 
 // --- Types ---
@@ -321,7 +329,7 @@ const ProblemSection = () => {
   );
 };
 
-const SolutionSection = () => {
+const SolutionSection = ({ onDetailClick }: { onDetailClick: () => void }) => {
   const areas = [
     { icon: <Wifi size={24} />, name: "ネット回線" },
     { icon: <CreditCard size={24} />, name: "キャッシュレス決済" },
@@ -374,6 +382,16 @@ const SolutionSection = () => {
             </div>
           ))}
         </motion.div>
+      </div>
+
+      <div className="max-w-7xl mx-auto px-6 text-center mt-10 md:mt-14">
+        <button
+          onClick={onDetailClick}
+          className="inline-flex items-center gap-2 bg-gray-900 hover:bg-gray-800 text-white font-bold py-3 px-8 md:py-4 md:px-10 rounded-full text-sm md:text-base transition-all duration-300 shadow-lg hover:shadow-xl hover:scale-105"
+        >
+          詳細はこちら
+          <ArrowRight size={18} />
+        </button>
       </div>
     </section>
   );
@@ -726,6 +744,140 @@ const LineContactView = ({ onBack }: { onBack: () => void }) => {
   );
 };
 
+const ServiceDetailPage = ({ onBack }: { onBack: () => void }) => {
+  const categories = [
+    {
+      title: "キャッシュレス決済サービス",
+      icon: <CreditCard className="text-blue-500" size={28} />,
+      items: ["USEN PAY", "Air Pay", "paycas", "ダイニー"],
+    },
+    {
+      title: "光回線 / Wi-Fi",
+      icon: <Wifi className="text-blue-500" size={28} />,
+      items: ["au光", "SoftBank光", "フレッツ", "So-net", "BIGLOBE", "ＮＵＲＯ光", "ビジモ光", "ＵAIR", "Macaroon3（ポケットWi-Fi）"],
+    },
+    {
+      title: "電力会社",
+      icon: <Zap className="text-yellow-500" size={28} />,
+      items: ["Loop電気", "オクトパスエナジー", "最適でんき", "パルパワー", "エネワン電気", "再点　HTBエナジー"],
+    },
+    {
+      title: "レジ / モバイルオーダー",
+      icon: <LayoutGrid className="text-green-500" size={28} />,
+      items: ["ダイニー", "funfo"],
+    },
+    {
+      title: "フードデリバリー",
+      icon: <Truck className="text-orange-500" size={28} />,
+      items: ["UberEats", "出前館", "ロケットナウ", "menu"],
+    },
+    {
+      title: "ウォーターサーバー",
+      icon: <Droplets className="text-cyan-500" size={28} />,
+      items: ["PremiumWater"],
+    },
+    {
+      title: "油削減",
+      icon: <Settings className="text-gray-500" size={28} />,
+      items: ["エコレ"],
+    },
+    {
+      title: "内装工事",
+      icon: <Building2 className="text-amber-600" size={28} />,
+      items: [],
+    },
+    {
+      title: "名刺 / チラシデザイン",
+      icon: <PenTool className="text-pink-500" size={28} />,
+      items: [],
+    },
+    {
+      title: "不動産",
+      icon: <Building2 className="text-indigo-500" size={28} />,
+      items: [],
+    },
+    {
+      title: "許可申請代行",
+      icon: <FileCheck className="text-emerald-500" size={28} />,
+      items: [],
+    },
+    {
+      title: "SNS広告 / 運用代行",
+      icon: <Megaphone className="text-red-500" size={28} />,
+      items: [],
+    },
+    {
+      title: "ポスティングサービス",
+      icon: <Mail className="text-violet-500" size={28} />,
+      items: [],
+    },
+  ];
+
+  return (
+    <div className="min-h-screen bg-white font-sans text-gray-900">
+      <div className="bg-gradient-to-b from-gray-50 to-white py-16 md:py-24">
+        <div className="max-w-5xl mx-auto px-6">
+          <button
+            onClick={onBack}
+            className="text-gray-500 font-medium hover:text-gray-900 transition-colors flex items-center gap-2 mb-8"
+          >
+            <ArrowLeft size={18} />
+            トップページに戻る
+          </button>
+
+          <div className="text-center mb-12 md:mb-16">
+            <span className="text-[10px] md:text-xs font-bold text-blue-600 tracking-widest uppercase mb-4 block">Service Details</span>
+            <h1 className="text-3xl md:text-5xl font-bold text-gray-900 mb-4">取引サービス一覧</h1>
+            <p className="text-sm md:text-lg text-gray-500 max-w-2xl mx-auto">
+              店舗運営に必要なあらゆるサービスを取り扱っています。<br className="hidden md:block" />
+              お気軽にご相談ください。
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {categories.map((cat, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: index * 0.05 }}
+                className="bg-white border border-gray-100 rounded-2xl p-6 shadow-sm hover:shadow-md transition-shadow"
+              >
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-12 h-12 rounded-xl bg-gray-50 flex items-center justify-center flex-shrink-0">
+                    {cat.icon}
+                  </div>
+                  <h3 className="font-bold text-lg text-gray-900">{cat.title}</h3>
+                </div>
+                {cat.items.length > 0 && (
+                  <ul className="space-y-2">
+                    {cat.items.map((item, i) => (
+                      <li key={i} className="flex items-center gap-2 text-gray-600 text-sm">
+                        <CheckCircle2 size={14} className="text-blue-400 flex-shrink-0" />
+                        {item}
+                      </li>
+                    ))}
+                  </ul>
+                )}
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="text-center mt-12">
+            <button
+              onClick={onBack}
+              className="text-gray-500 font-medium hover:text-gray-900 transition-colors flex items-center justify-center gap-2 mx-auto"
+            >
+              <ArrowLeft size={18} />
+              トップページに戻る
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
 const CaseStudiesPage = ({ onBack }: { onBack: () => void }) => {
   const cases = [
     {
@@ -822,7 +974,7 @@ const CaseStudiesPage = ({ onBack }: { onBack: () => void }) => {
 };
 
 export default function App() {
-  const [view, setView] = useState<'home' | 'contact' | 'cases'>('home');
+  const [view, setView] = useState<'home' | 'contact' | 'cases' | 'services'>('home');
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -847,6 +999,10 @@ export default function App() {
 
   if (view === 'contact') {
     return <LineContactView onBack={() => setView('home')} />;
+  }
+
+  if (view === 'services') {
+    return <ServiceDetailPage onBack={() => setView('home')} />;
   }
 
   if (view === 'cases') {
@@ -886,7 +1042,7 @@ export default function App() {
         <Hero onConsultClick={() => setView('contact')} />
         <AboutKaigyoSection />
         <ProblemSection />
-        <SolutionSection />
+        <SolutionSection onDetailClick={() => setView('services')} />
         <ProcessSection />
         <AboutSection />
       </main>
