@@ -615,6 +615,14 @@ const AboutSection = () => {
                   <span className="font-bold text-sm md:text-base">株式会社LiverGate（ライバーゲート）</span>
                 </div>
                 <div className="flex flex-col sm:flex-row border-b border-white/10 pb-4 gap-1 sm:gap-0">
+                  <span className="w-full sm:w-32 text-gray-400 text-sm font-medium">代表者</span>
+                  <span className="font-bold text-sm md:text-base">平良 裕太</span>
+                </div>
+                <div className="flex flex-col sm:flex-row border-b border-white/10 pb-4 gap-1 sm:gap-0">
+                  <span className="w-full sm:w-32 text-gray-400 text-sm font-medium">所在地</span>
+                  <span className="font-bold text-sm md:text-base">〒550-0014<br />大阪府大阪市西区北堀江1丁目21-4 JSビル9F</span>
+                </div>
+                <div className="flex flex-col sm:flex-row border-b border-white/10 pb-4 gap-1 sm:gap-0">
                   <span className="w-full sm:w-32 text-gray-400 text-sm font-medium">事業内容</span>
                   <span className="font-bold text-sm md:text-base">店舗専門コンシェルジュサービス「カイギョーズ」の運営、店舗経営コンサルティング</span>
                 </div>
@@ -1029,7 +1037,19 @@ export default function App() {
               "@type": "Organization",
               "name": "株式会社LiverGate",
               "alternateName": ["LiverGate", "ライバーゲート"],
-              "url": "https://ais-pre-k42smc2cprknbmm6qaajio-474926124575.asia-east1.run.app/"
+              "url": "https://ais-pre-k42smc2cprknbmm6qaajio-474926124575.asia-east1.run.app/",
+              "founder": {
+                "@type": "Person",
+                "name": "平良 裕太"
+              },
+              "address": {
+                "@type": "PostalAddress",
+                "postalCode": "550-0014",
+                "addressCountry": "JP",
+                "addressRegion": "大阪府",
+                "addressLocality": "大阪市西区",
+                "streetAddress": "北堀江1丁目21-4 JSビル9F"
+              }
             },
             "description": "株式会社LiverGate（ライバーゲート）が運営する飲食店オーナー様のための専門コンシェルジュサービス。飲食店の開業や運営に必要なインフラ・固定費の最適化をサポート。",
             "areaServed": "JP",
