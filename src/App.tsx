@@ -620,7 +620,7 @@ const AboutSection = () => {
                 </div>
                 <div className="flex flex-col sm:flex-row border-b border-white/10 pb-4 gap-1 sm:gap-0">
                   <span className="w-full sm:w-32 text-gray-400 text-sm font-medium">所在地</span>
-                  <span className="font-bold text-sm md:text-base">〒550-0014<br />大阪府大阪市西区北堀江1丁目21-4 JSビル9F</span>
+                  <span className="font-bold text-sm md:text-base">〒550-0015<br />大阪府大阪市西区南堀江1丁目21-4 Jsビル 9F</span>
                 </div>
                 <div className="flex flex-col sm:flex-row border-b border-white/10 pb-4 gap-1 sm:gap-0">
                   <span className="w-full sm:w-32 text-gray-400 text-sm font-medium">事業内容</span>
@@ -1044,11 +1044,11 @@ export default function App() {
               },
               "address": {
                 "@type": "PostalAddress",
-                "postalCode": "550-0014",
+                "postalCode": "550-0015",
                 "addressCountry": "JP",
                 "addressRegion": "大阪府",
                 "addressLocality": "大阪市西区",
-                "streetAddress": "北堀江1丁目21-4 JSビル9F"
+                "streetAddress": "南堀江1丁目21-4 Jsビル 9F"
               }
             },
             "description": "株式会社LiverGate（ライバーゲート）が運営する飲食店オーナー様のための専門コンシェルジュサービス。飲食店の開業や運営に必要なインフラ・固定費の最適化をサポート。",
