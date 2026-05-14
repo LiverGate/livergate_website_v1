@@ -616,7 +616,7 @@ const AboutSection = () => {
                 </div>
                 <div className="flex flex-col sm:flex-row border-b border-white/10 pb-4 gap-1 sm:gap-0">
                   <span className="w-full sm:w-32 text-gray-400 text-sm font-medium">代表者</span>
-                  <span className="font-bold text-sm md:text-base">平良 裕太</span>
+                  <span className="font-bold text-sm md:text-base">平良祐太</span>
                 </div>
                 <div className="flex flex-col sm:flex-row border-b border-white/10 pb-4 gap-1 sm:gap-0">
                   <span className="w-full sm:w-32 text-gray-400 text-sm font-medium">所在地</span>
@@ -1040,7 +1040,7 @@ export default function App() {
               "url": "https://ais-pre-k42smc2cprknbmm6qaajio-474926124575.asia-east1.run.app/",
               "founder": {
                 "@type": "Person",
-                "name": "平良 裕太"
+                "name": "平良祐太"
               },
               "address": {
                 "@type": "PostalAddress",
