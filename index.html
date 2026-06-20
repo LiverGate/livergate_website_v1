@@ -3,30 +3,71 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>カイギョーズ | 飲食店開業支援 | 株式会社LiverGate（ライバーゲート）</title>
-    <meta name="description" content="カイギョーズ（カイギョウ・カイギョー・kaigyo）は、株式会社LiverGate（ライバーゲート）が運営する飲食店オーナーのための専門コンシェルジュサービスです。飲食店の開業や運営に必要なインフラ・固定費の最適化を、中立的な立場でサポートします。" />
-    <meta name="keywords" content="カイギョーズ, カイギョー, カイギョウ, 開業, kaigyo, 飲食店, 株式会社LiverGate, LiverGate, ライバーゲート, 飲食店開業, 飲食店支援, 固定費削減" />
-    
-    <!-- Open Graph / Facebook / LINE -->
+
+    <!-- Per-route metadata (title / description / canonical / OG / Twitter) is
+         injected here at prerender time; see prerender.ts and src/seo.ts. -->
+    <!--app-head-->
+
+    <!-- Shared Open Graph / Twitter -->
     <meta property="og:type" content="website" />
-    <meta property="og:url" content="https://ais-pre-k42smc2cprknbmm6qaajio-474926124575.asia-east1.run.app/" />
+    <meta property="og:locale" content="ja_JP" />
     <meta property="og:site_name" content="カイギョーズ" />
-    <meta property="og:title" content="カイギョーズ | 飲食店開業支援 | 株式会社LiverGate（ライバーゲート）" />
-    <meta property="og:description" content="株式会社LiverGate（ライバーゲート）が運営するカイギョーズ。飲食店の開業・インフラ・固定費の最適化を中立的な立場でサポート。" />
     <meta property="og:image" content="https://res.cloudinary.com/duismpfyp/image/upload/v1773191768/w-kaygyoz_luldlm.jpg" />
+    <meta property="og:image:alt" content="カイギョーズ｜大阪の飲食店開業支援（株式会社LiverGate）" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content="https://res.cloudinary.com/duismpfyp/image/upload/v1773191768/w-kaygyoz_luldlm.jpg" />
+    <meta name="twitter:image:alt" content="カイギョーズ｜大阪の飲食店開業支援（株式会社LiverGate）" />
 
-    <!-- Twitter -->
-    <meta property="twitter:card" content="summary_large_image" />
-    <meta property="twitter:url" content="https://ais-pre-k42smc2cprknbmm6qaajio-474926124575.asia-east1.run.app/" />
-    <meta property="twitter:title" content="カイギョーズ | 飲食店開業支援 | 株式会社LiverGate（ライバーゲート）" />
-    <meta property="twitter:description" content="株式会社LiverGate（ライバーゲート）が運営するカイギョーズ。飲食店の開業・インフラ・固定費の最適化を中立的な立場でサポート。" />
-    <meta property="twitter:image" content="https://res.cloudinary.com/duismpfyp/image/upload/v1773191768/w-kaygyoz_luldlm.jpg" />
-
-    <link rel="canonical" href="https://ais-pre-k42smc2cprknbmm6qaajio-474926124575.asia-east1.run.app/" />
     <link rel="icon" type="image/jpeg" href="https://res.cloudinary.com/duismpfyp/image/upload/v1773191768/w-kaygyoz_luldlm.jpg" />
+
+    <!-- Structured data: served statically so crawlers and social unfurlers
+         see it without executing JavaScript. -->
+    <script type="application/ld+json">
+      {
+        "@context": "https://schema.org",
+        "@graph": [
+          {
+            "@type": "WebSite",
+            "@id": "https://livergate-osaka.com/#website",
+            "name": "カイギョーズ",
+            "alternateName": ["Kaygyoz", "カイギョウ", "カイギョー", "kaigyo", "開業", "株式会社LiverGate"],
+            "url": "https://livergate-osaka.com/",
+            "inLanguage": "ja"
+          },
+          {
+            "@type": ["Organization", "ProfessionalService"],
+            "@id": "https://livergate-osaka.com/#org",
+            "name": "株式会社LiverGate",
+            "alternateName": ["LiverGate", "ライバーゲート", "カイギョーズ"],
+            "url": "https://livergate-osaka.com/",
+            "logo": "https://res.cloudinary.com/duismpfyp/image/upload/v1773191768/w-kaygyoz_luldlm.jpg",
+            "image": "https://res.cloudinary.com/duismpfyp/image/upload/v1773191768/w-kaygyoz_luldlm.jpg",
+            "founder": { "@type": "Person", "name": "平良祐太" },
+            "address": {
+              "@type": "PostalAddress",
+              "postalCode": "550-0015",
+              "addressCountry": "JP",
+              "addressRegion": "大阪府",
+              "addressLocality": "大阪市西区",
+              "streetAddress": "南堀江1丁目21-4 Jsビル 9F"
+            },
+            "areaServed": "JP"
+          },
+          {
+            "@type": "Service",
+            "name": "カイギョーズ",
+            "alternateName": ["Kaygyoz", "カイギョウ", "カイギョー", "kaigyo", "開業", "飲食店開業支援"],
+            "provider": { "@id": "https://livergate-osaka.com/#org" },
+            "description": "株式会社LiverGate（ライバーゲート）が運営する飲食店オーナー様のための専門コンシェルジュサービス。飲食店の開業や運営に必要なインフラ・固定費の最適化をサポート。",
+            "areaServed": "JP",
+            "serviceType": "飲食店支援コンシェルジュ"
+          }
+        ]
+      }
+    </script>
   </head>
   <body>
-    <div id="root"></div>
+    <div id="root"><!--app-html--></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

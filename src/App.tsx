@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
+import { Routes, Route, useNavigate } from 'react-router-dom';
 import { motion, AnimatePresence } from 'motion/react';
+import { META, ORIGIN, type RouteMeta } from './seo';
 import {
   Menu,
   X,
@@ -51,7 +53,7 @@ const Navbar = ({ onLinkClick }: { onLinkClick: (href: string) => void }) => {
   }, []);
 
   const navLinks = [
-    { name: 'カイギョーズとは', href: '#about-kaygyoz' },
+    { name: 'カイギョーズとは', href: '#about-kaigyo' },
     { name: 'サービス', href: '#service' },
     { name: '会社概要', href: '#about' },
   ];
@@ -84,7 +86,7 @@ const Navbar = ({ onLinkClick }: { onLinkClick: (href: string) => void }) => {
             </a>
           ))}
           <button 
-            onClick={() => onLinkClick('#contact')}
+            onClick={() => onLinkClick('/contact')}
             className="bg-gray-900 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-gray-800 transition-all"
           >
             お問い合わせ
@@ -121,7 +123,7 @@ const Navbar = ({ onLinkClick }: { onLinkClick: (href: string) => void }) => {
             ))}
             <button 
               onClick={() => {
-                onLinkClick('#contact');
+                onLinkClick('/contact');
                 setIsMobileMenuOpen(false);
               }}
               className="bg-gray-900 text-white w-full py-3 rounded-xl font-medium mt-2"
@@ -690,7 +692,8 @@ const Footer = ({ onLinkClick }: { onLinkClick: (href: string) => void }) => {
             <h4 className="font-bold text-gray-900 mb-6">サービス</h4>
             <ul className="space-y-4 text-sm text-gray-500">
               <li><a href="#about-kaigyo" onClick={(e) => { e.preventDefault(); onLinkClick('#about-kaigyo'); }} className="hover:text-gray-900 transition-colors">カイギョーズとは</a></li>
-              <li><a href="#service" onClick={(e) => { e.preventDefault(); onLinkClick('#service'); }} className="hover:text-gray-900 transition-colors">サービス一覧</a></li>
+              <li><a href="/services" onClick={(e) => { e.preventDefault(); onLinkClick('/services'); }} className="hover:text-gray-900 transition-colors">サービス一覧</a></li>
+              <li><a href="/cases" onClick={(e) => { e.preventDefault(); onLinkClick('/cases'); }} className="hover:text-gray-900 transition-colors">導入事例</a></li>
               <li><a href="#process" onClick={(e) => { e.preventDefault(); onLinkClick('#process'); }} className="hover:text-gray-900 transition-colors">ご利用の流れ</a></li>
             </ul>
           </div>
@@ -698,7 +701,7 @@ const Footer = ({ onLinkClick }: { onLinkClick: (href: string) => void }) => {
             <h4 className="font-bold text-gray-900 mb-6">サポート</h4>
             <ul className="space-y-4 text-sm text-gray-500">
               <li><a href="#faq" className="hover:text-gray-900 transition-colors">よくある質問</a></li>
-              <li><a href="#contact" onClick={(e) => { e.preventDefault(); onLinkClick('#contact'); }} className="hover:text-gray-900 transition-colors">お問い合わせ</a></li>
+              <li><a href="/contact" onClick={(e) => { e.preventDefault(); onLinkClick('/contact'); }} className="hover:text-gray-900 transition-colors">お問い合わせ</a></li>
               <li><a href="#" className="hover:text-gray-900 transition-colors">プライバシーポリシー</a></li>
               <li><a href="#" className="hover:text-gray-900 transition-colors">利用規約</a></li>
             </ul>
@@ -981,92 +984,79 @@ const CaseStudiesPage = ({ onBack }: { onBack: () => void }) => {
   );
 };
 
-export default function App() {
-  const [view, setView] = useState<'home' | 'contact' | 'cases' | 'services'>('home');
-
+// Client-side metadata updates (title / description / canonical) on navigation.
+// Runs only in the browser; the static <head> of each prerendered page is the
+// source of truth for crawlers.
+function usePageMeta(meta: RouteMeta) {
   useEffect(() => {
+    document.title = meta.title;
+    document.head
+      .querySelector('meta[name="description"]')
+      ?.setAttribute('content', meta.description);
+    document.head
+      .querySelector('link[rel="canonical"]')
+      ?.setAttribute('href', ORIGIN + meta.path);
     window.scrollTo(0, 0);
-  }, [view]);
+  }, [meta]);
+}
+
+function Home() {
+  const navigate = useNavigate();
+  usePageMeta(META['/']);
 
   const handleLinkClick = (href: string) => {
-    if (href === '/') {
-      setView('home');
-      return;
-    }
-    if (href === '#contact') {
-      setView('contact');
-      return;
-    }
     if (href.startsWith('#')) {
       const element = document.querySelector(href);
       if (element) {
         element.scrollIntoView({ behavior: 'smooth' });
       }
+      return;
     }
+    navigate(href);
   };
-
-  if (view === 'contact') {
-    return <LineContactView onBack={() => setView('home')} />;
-  }
-
-  if (view === 'services') {
-    return <ServiceDetailPage onBack={() => setView('home')} />;
-  }
-
-  if (view === 'cases') {
-    return <CaseStudiesPage onBack={() => setView('home')} />;
-  }
 
   return (
     <div className="min-h-screen bg-white font-sans text-gray-900 selection:bg-blue-100 selection:text-blue-900">
-      <script type="application/ld+json">
-        {JSON.stringify([
-          {
-            "@context": "https://schema.org",
-            "@type": "WebSite",
-            "name": "カイギョーズ",
-            "alternateName": ["Kaygyoz", "カイギョウ", "カイギョー", "kaigyo", "開業", "株式会社LiverGate"],
-            "url": "https://ais-pre-k42smc2cprknbmm6qaajio-474926124575.asia-east1.run.app/"
-          },
-          {
-            "@context": "https://schema.org",
-            "@type": "Service",
-            "name": "カイギョーズ",
-            "alternateName": ["Kaygyoz", "カイギョウ", "カイギョー", "kaigyo", "開業", "飲食店開業支援"],
-            "provider": {
-              "@type": "Organization",
-              "name": "株式会社LiverGate",
-              "alternateName": ["LiverGate", "ライバーゲート"],
-              "url": "https://ais-pre-k42smc2cprknbmm6qaajio-474926124575.asia-east1.run.app/",
-              "founder": {
-                "@type": "Person",
-                "name": "平良祐太"
-              },
-              "address": {
-                "@type": "PostalAddress",
-                "postalCode": "550-0015",
-                "addressCountry": "JP",
-                "addressRegion": "大阪府",
-                "addressLocality": "大阪市西区",
-                "streetAddress": "南堀江1丁目21-4 Jsビル 9F"
-              }
-            },
-            "description": "株式会社LiverGate（ライバーゲート）が運営する飲食店オーナー様のための専門コンシェルジュサービス。飲食店の開業や運営に必要なインフラ・固定費の最適化をサポート。",
-            "areaServed": "JP",
-            "serviceType": "飲食店支援コンシェルジュ"
-          }
-        ])}
-      </script>
       <Navbar onLinkClick={handleLinkClick} />
       <main>
-        <Hero onConsultClick={() => setView('contact')} />
+        <Hero onConsultClick={() => navigate('/contact')} />
         <AboutKaigyoSection />
         <ProblemSection />
-        <SolutionSection onDetailClick={() => setView('services')} />
+        <SolutionSection onDetailClick={() => navigate('/services')} />
         <ProcessSection />
         <AboutSection />
       </main>
       <Footer onLinkClick={handleLinkClick} />
     </div>
+  );
+}
+
+function ServicesRoute() {
+  const navigate = useNavigate();
+  usePageMeta(META['/services']);
+  return <ServiceDetailPage onBack={() => navigate('/')} />;
+}
+
+function CasesRoute() {
+  const navigate = useNavigate();
+  usePageMeta(META['/cases']);
+  return <CaseStudiesPage onBack={() => navigate('/')} />;
+}
+
+function ContactRoute() {
+  const navigate = useNavigate();
+  usePageMeta(META['/contact']);
+  return <LineContactView onBack={() => navigate('/')} />;
+}
+
+export default function App() {
+  return (
+    <Routes>
+      <Route path="/" element={<Home />} />
+      <Route path="/services" element={<ServicesRoute />} />
+      <Route path="/cases" element={<CasesRoute />} />
+      <Route path="/contact" element={<ContactRoute />} />
+      <Route path="*" element={<Home />} />
+    </Routes>
   );
 }
