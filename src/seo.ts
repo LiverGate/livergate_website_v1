@@ -22,13 +22,13 @@ export const ROUTES: RouteMeta[] = [
     // カイギョーズの正規URLである /kaygyoz を指す。
     canonicalPath: '/kaygyoz',
     title:
-      'カイギョーズ（Kaygyoz）｜大阪の飲食店開業支援・固定費削減｜株式会社LiverGate',
+      'カイギョーズ（Kaygyoz）｜大阪の飲食店開業支援・固定費削減｜株式会社OPENGATE',
     description:
-      '大阪を拠点に飲食店の開業・運営を支援する専門コンシェルジュサービス「カイギョーズ（Kaygyoz）」。カイギョウ・カイギョー・kaigyoとも表記。株式会社LiverGate（ライバーゲート）が、インフラ・固定費の最適化を中立的な立場でサポートします。',
+      '大阪を拠点に飲食店の開業・運営を支援する専門コンシェルジュサービス「カイギョーズ（Kaygyoz）」。カイギョウ・カイギョー・kaigyoとも表記。株式会社OPENGATE（オープンゲート）が、インフラ・固定費の最適化を中立的な立場でサポートします。',
     ogTitle:
-      'カイギョーズ（Kaygyoz）｜大阪の飲食店開業支援｜株式会社LiverGate',
+      'カイギョーズ（Kaygyoz）｜大阪の飲食店開業支援｜株式会社OPENGATE',
     ogDescription:
-      '大阪の飲食店開業支援サービス「カイギョーズ（Kaygyoz）」。株式会社LiverGate（ライバーゲート）が、開業・インフラ・固定費の最適化を中立的な立場でサポート。',
+      '大阪の飲食店開業支援サービス「カイギョーズ（Kaygyoz）」。株式会社OPENGATE（オープンゲート）が、開業・インフラ・固定費の最適化を中立的な立場でサポート。',
   },
   {
     path: '/services',
@@ -44,7 +44,7 @@ export const ROUTES: RouteMeta[] = [
     path: '/cases',
     title: '導入事例｜飲食店オーナーの成功事例｜カイギョーズ（Kaygyoz）',
     description:
-      'カイギョーズ（Kaygyoz）の導入事例。大阪を中心に、飲食店の開業・固定費削減・インフラ最適化を支援した実例をご紹介します。株式会社LiverGate運営。',
+      'カイギョーズ（Kaygyoz）の導入事例。大阪を中心に、飲食店の開業・固定費削減・インフラ最適化を支援した実例をご紹介します。株式会社OPENGATE運営。',
     ogTitle: '導入事例｜飲食店オーナーの成功事例｜カイギョーズ（Kaygyoz）',
     ogDescription:
       '大阪を中心とした飲食店の開業・固定費削減・インフラ最適化の実例。カイギョーズ（Kaygyoz）の導入事例をご紹介します。',
@@ -53,7 +53,7 @@ export const ROUTES: RouteMeta[] = [
     path: '/contact',
     title: 'お問い合わせ｜LINEで無料相談｜カイギョーズ（Kaygyoz）',
     description:
-      '飲食店の開業・固定費・インフラのご相談はカイギョーズ（Kaygyoz）へ。大阪の飲食店オーナー様向けにLINEで無料相談を受け付けています。株式会社LiverGate運営。',
+      '飲食店の開業・固定費・インフラのご相談はカイギョーズ（Kaygyoz）へ。大阪の飲食店オーナー様向けにLINEで無料相談を受け付けています。株式会社OPENGATE運営。',
     ogTitle: 'お問い合わせ｜LINEで無料相談｜カイギョーズ（Kaygyoz）',
     ogDescription:
       '飲食店の開業・固定費・インフラのご相談はカイギョーズ（Kaygyoz）へ。大阪のオーナー様向けにLINEで無料相談を受付中。',

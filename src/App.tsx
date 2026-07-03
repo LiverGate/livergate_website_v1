@@ -55,7 +55,6 @@ const Navbar = ({ onLinkClick }: { onLinkClick: (href: string) => void }) => {
   const navLinks = [
     { name: 'カイギョーズとは', href: '#about-kaigyo' },
     { name: 'サービス', href: '#service' },
-    { name: '会社概要', href: '#about' },
   ];
 
   const handleLinkClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
@@ -592,86 +591,6 @@ const ProcessSection = () => {
   );
 };
 
-const AboutSection = () => {
-  return (
-    <section id="about" className="py-16 md:py-24 bg-white">
-      <div className="max-w-7xl mx-auto px-6">
-        <motion.div 
-          initial={{ opacity: 0, scale: 0.95 }}
-          whileInView={{ opacity: 1, scale: 1 }}
-          transition={{ duration: 0.8 }}
-          viewport={{ once: true }}
-          className="bg-gray-900 rounded-[32px] md:rounded-[40px] p-8 md:p-20 text-white overflow-hidden relative"
-        >
-          <div className="grid md:grid-cols-2 gap-12 md:gap-16 items-center relative z-10">
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.2, duration: 0.6 }}
-              viewport={{ once: true }}
-            >
-              <h2 className="text-3xl md:text-4xl font-bold mb-8">運営会社について</h2>
-              <div className="space-y-4 md:space-y-6">
-                <div className="flex flex-col sm:flex-row border-b border-white/10 pb-4 gap-1 sm:gap-0">
-                  <span className="w-full sm:w-32 text-gray-400 text-sm font-medium">会社名</span>
-                  <span className="font-bold text-sm md:text-base">株式会社LiverGate（ライバーゲート）</span>
-                </div>
-                <div className="flex flex-col sm:flex-row border-b border-white/10 pb-4 gap-1 sm:gap-0">
-                  <span className="w-full sm:w-32 text-gray-400 text-sm font-medium">代表者</span>
-                  <span className="font-bold text-sm md:text-base">平良祐太</span>
-                </div>
-                <div className="flex flex-col sm:flex-row border-b border-white/10 pb-4 gap-1 sm:gap-0">
-                  <span className="w-full sm:w-32 text-gray-400 text-sm font-medium">所在地</span>
-                  <span className="font-bold text-sm md:text-base">〒550-0015<br />大阪府大阪市西区南堀江1丁目21-4 Jsビル 9F</span>
-                </div>
-                <div className="flex flex-col sm:flex-row border-b border-white/10 pb-4 gap-1 sm:gap-0">
-                  <span className="w-full sm:w-32 text-gray-400 text-sm font-medium">事業内容</span>
-                  <span className="font-bold text-sm md:text-base">店舗専門コンシェルジュサービス「カイギョーズ」の運営、店舗経営コンサルティング</span>
-                </div>
-                <div className="flex flex-col sm:flex-row border-b border-white/10 pb-4 gap-1 sm:gap-0">
-                  <span className="w-full sm:w-32 text-gray-400 text-sm font-medium">ミッション</span>
-                  <span className="font-bold text-sm md:text-base">「店舗オーナー様の負担を減らし、創造的な時間を増やす」</span>
-                </div>
-              </div>
-            </motion.div>
-            <motion.div 
-              initial={{ opacity: 0, x: 20 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              transition={{ delay: 0.4, duration: 0.6 }}
-              viewport={{ once: true }}
-              className="text-center md:text-right"
-            >
-              <motion.div 
-                whileHover={{ scale: 1.05 }}
-                className="inline-block p-[1px] rounded-full bg-gradient-to-tr from-[#ef4444] via-[#eab308] via-[#22c55e] via-[#3b82f6] to-[#a855f7] mb-6 md:mb-8"
-              >
-                <div className="bg-gray-900 rounded-full px-6 py-3 md:px-8 md:py-4">
-                  <span className="text-xl md:text-2xl font-bold tracking-tight">LiverGate</span>
-                </div>
-              </motion.div>
-              <p className="text-gray-400 text-base md:text-lg leading-relaxed">
-                私たちは、飲食業界のインフラを整え、<br className="hidden md:block" />
-                すべてのオーナー様が理想の店づくりに<br className="hidden md:block" />
-                専念できる社会を目指しています。
-              </p>
-            </motion.div>
-          </div>
-          
-          {/* Decorative Gradient */}
-          <motion.div 
-            animate={{ 
-              scale: [1, 1.2, 1],
-              opacity: [0.2, 0.3, 0.2]
-            }}
-            transition={{ duration: 8, repeat: Infinity, ease: "easeInOut" }}
-            className="absolute -bottom-20 -right-20 w-96 h-96 bg-blue-500/20 blur-[100px] rounded-full" 
-          />
-        </motion.div>
-      </div>
-    </section>
-  );
-};
-
 const Footer = ({ onLinkClick }: { onLinkClick: (href: string) => void }) => {
   return (
     <footer className="bg-white border-t border-gray-100 pt-20 pb-10">
@@ -708,7 +627,7 @@ const Footer = ({ onLinkClick }: { onLinkClick: (href: string) => void }) => {
           </div>
         </div>
         <div className="flex flex-col md:flex-row justify-between items-center pt-10 border-t border-gray-100 gap-6">
-          <p className="text-sm text-gray-400">© 2024 LiverGate Inc. All rights reserved.</p>
+          <p className="text-sm text-gray-400">© 2026 OPENGATE Inc. All rights reserved.</p>
           <div className="flex gap-8">
             <a href="#" className="text-gray-400 hover:text-gray-900 transition-colors">Twitter</a>
             <a href="#" className="text-gray-400 hover:text-gray-900 transition-colors">Facebook</a>
@@ -1024,7 +943,6 @@ function Home() {
         <ProblemSection />
         <SolutionSection onDetailClick={() => navigate('/services')} />
         <ProcessSection />
-        <AboutSection />
       </main>
       <Footer onLinkClick={handleLinkClick} />
     </div>
