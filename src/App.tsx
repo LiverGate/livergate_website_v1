@@ -85,7 +85,7 @@ const Navbar = ({ onLinkClick }: { onLinkClick: (href: string) => void }) => {
             </a>
           ))}
           <button 
-            onClick={() => onLinkClick('/contact')}
+            onClick={() => onLinkClick('/contact.html')}
             className="bg-gray-900 text-white px-5 py-2 rounded-full text-sm font-medium hover:bg-gray-800 transition-all"
           >
             お問い合わせ
@@ -122,7 +122,7 @@ const Navbar = ({ onLinkClick }: { onLinkClick: (href: string) => void }) => {
             ))}
             <button 
               onClick={() => {
-                onLinkClick('/contact');
+                onLinkClick('/contact.html');
                 setIsMobileMenuOpen(false);
               }}
               className="bg-gray-900 text-white w-full py-3 rounded-xl font-medium mt-2"
@@ -620,7 +620,7 @@ const Footer = ({ onLinkClick }: { onLinkClick: (href: string) => void }) => {
             <h4 className="font-bold text-gray-900 mb-6">サポート</h4>
             <ul className="space-y-4 text-sm text-gray-500">
               <li><a href="#faq" className="hover:text-gray-900 transition-colors">よくある質問</a></li>
-              <li><a href="/contact" onClick={(e) => { e.preventDefault(); onLinkClick('/contact'); }} className="hover:text-gray-900 transition-colors">お問い合わせ</a></li>
+              <li><a href="/contact.html" onClick={(e) => { e.preventDefault(); onLinkClick('/contact.html'); }} className="hover:text-gray-900 transition-colors">お問い合わせ</a></li>
               <li><a href="#" className="hover:text-gray-900 transition-colors">プライバシーポリシー</a></li>
               <li><a href="#" className="hover:text-gray-900 transition-colors">利用規約</a></li>
             </ul>
@@ -929,6 +929,11 @@ function Home() {
       if (element) {
         element.scrollIntoView({ behavior: 'smooth' });
       }
+      return;
+    }
+    if (href.endsWith('.html')) {
+      // コーポレートサイト（site/ 配信の静的ページ）へはフルページ遷移
+      window.location.href = href;
       return;
     }
     navigate(href);
