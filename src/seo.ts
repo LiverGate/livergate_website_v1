@@ -10,11 +10,17 @@ export interface RouteMeta {
   description: string;
   ogTitle: string;
   ogDescription: string;
+  /** Set when this path is an alias of another page; canonical/og:url point there. */
+  canonicalPath?: string;
 }
 
 export const ROUTES: RouteMeta[] = [
   {
     path: '/',
+    // ドメイン統合後、ルートは OpenGate コーポレートサイト（server.ts の site/ 配信）。
+    // この "/" エントリは SPA フォールバック用のシェルにのみ使われ、canonical は
+    // カイギョーズの正規URLである /kaygyoz を指す。
+    canonicalPath: '/kaygyoz',
     title:
       'カイギョーズ（Kaygyoz）｜大阪の飲食店開業支援・固定費削減｜株式会社LiverGate',
     description:
@@ -53,6 +59,10 @@ export const ROUTES: RouteMeta[] = [
       '飲食店の開業・固定費・インフラのご相談はカイギョーズ（Kaygyoz）へ。大阪のオーナー様向けにLINEで無料相談を受付中。',
   },
 ];
+
+// /kaygyoz: カイギョーズサイトの正規トップURL（"/" は OpenGate コーポレートが占有）。
+// メタは "/" エントリと共通。canonicalPath は spread で '/kaygyoz' を引き継ぐ＝自己参照。
+ROUTES.push({ ...ROUTES[0], path: '/kaygyoz' });
 
 export const META: Record<string, RouteMeta> = Object.fromEntries(
   ROUTES.map((r) => [r.path, r])

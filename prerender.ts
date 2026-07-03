@@ -18,7 +18,7 @@ function esc(s: string): string {
 }
 
 function headFor(route: RouteMeta): string {
-  const url = ORIGIN + route.path;
+  const url = ORIGIN + (route.canonicalPath ?? route.path);
   return [
     `<title>${esc(route.title)}</title>`,
     `<meta name="description" content="${esc(route.description)}" />`,

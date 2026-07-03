@@ -1,0 +1,231 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<title>お問い合わせ管理｜OPENGATE（管理用）</title>
+<style>
+  :root{ --bg:#0b0b0d; --panel:#141417; --panel2:#1c1c21; --line:rgba(255,255,255,.10); --ink:#ececef; --sub:#9a9aa2; --accent:#C7303C; }
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--bg);color:var(--ink);font-family:'Inter','Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;font-size:14px;line-height:1.6;-webkit-font-smoothing:antialiased;}
+  .wrap{max-width:1040px;margin:0 auto;padding:0 20px;}
+  header.adm{position:sticky;top:0;z-index:10;background:rgba(11,11,13,.86);backdrop-filter:blur(10px);border-bottom:1px solid var(--line);}
+  .adm-bar{display:flex;align-items:center;gap:12px;padding:15px 0;flex-wrap:wrap;}
+  .adm-bar h1{font-size:17px;font-weight:800;letter-spacing:.02em;margin:0;}
+  .adm-bar .count{font-size:12px;color:var(--sub);background:var(--panel2);border:1px solid var(--line);padding:3px 10px;border-radius:20px;}
+  .adm-bar .sp{flex:1;}
+  .btn{font:inherit;font-size:13px;font-weight:600;color:var(--ink);background:var(--panel2);border:1px solid var(--line);border-radius:6px;padding:8px 14px;cursor:pointer;transition:.15s;text-decoration:none;display:inline-flex;align-items:center;gap:6px;}
+  .btn:hover{background:#26262b;border-color:rgba(255,255,255,.2);}
+  .btn.danger:hover{background:rgba(199,48,60,.16);border-color:var(--accent);color:#ff8b93;}
+  .toolbar{display:flex;gap:10px;align-items:center;flex-wrap:wrap;padding:18px 0 6px;}
+  .tabs{display:inline-flex;background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:3px;gap:2px;}
+  .tab{font:inherit;font-size:13px;font-weight:600;color:var(--sub);background:transparent;border:0;border-radius:6px;padding:7px 14px;cursor:pointer;transition:.15s;}
+  .tab.active{background:var(--accent);color:#fff;}
+  .search{flex:1;min-width:180px;}
+  .search input{width:100%;font:inherit;font-size:13px;color:var(--ink);background:var(--panel);border:1px solid var(--line);border-radius:8px;padding:9px 13px;}
+  .search input::placeholder{color:#6a6a72;}
+  main{padding:14px 0 80px;}
+  .list{display:flex;flex-direction:column;gap:10px;}
+  .card{background:var(--panel);border:1px solid var(--line);border-radius:10px;overflow:hidden;}
+  .card-head{display:flex;align-items:center;gap:12px;padding:14px 16px;cursor:pointer;}
+  .card-head:hover{background:var(--panel2);}
+  .badge{font-size:11px;font-weight:700;letter-spacing:.02em;padding:3px 9px;border-radius:5px;white-space:nowrap;flex-shrink:0;}
+  .badge.contact{background:rgba(59,130,246,.16);color:#7db0ff;border:1px solid rgba(59,130,246,.32);}
+  .badge.apply{background:rgba(199,48,60,.16);color:#ff8b93;border:1px solid rgba(199,48,60,.32);}
+  .c-cat{font-size:12px;color:var(--sub);flex-shrink:0;}
+  .c-name{font-weight:700;flex-shrink:0;}
+  .c-prev{color:var(--sub);font-size:13px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;flex:1;min-width:40px;}
+  .c-date{font-size:12px;color:#6a6a72;flex-shrink:0;font-variant-numeric:tabular-nums;}
+  .c-caret{width:8px;height:8px;border-right:2px solid var(--sub);border-bottom:2px solid var(--sub);transform:rotate(45deg);transition:.2s;flex-shrink:0;margin-left:2px;}
+  .card.open .c-caret{transform:rotate(-135deg);}
+  .card-body{display:none;padding:6px 16px 16px;border-top:1px solid var(--line);}
+  .card.open .card-body{display:block;}
+  .frow{display:grid;grid-template-columns:130px 1fr;gap:10px;padding:9px 0;border-bottom:1px dashed rgba(255,255,255,.07);}
+  .frow:last-child{border-bottom:0;}
+  .frow .k{color:var(--sub);font-size:12px;}
+  .frow .v{color:var(--ink);word-break:break-word;white-space:pre-wrap;}
+  .frow .v a{color:#7db0ff;}
+  .card-act{display:flex;justify-content:flex-end;gap:8px;margin-top:12px;}
+  .empty{text-align:center;color:var(--sub);padding:70px 20px;border:1px dashed var(--line);border-radius:12px;}
+  .empty b{display:block;color:var(--ink);font-size:15px;margin-bottom:8px;}
+  .note{margin-top:26px;font-size:12px;color:#8a8a92;background:var(--panel);border:1px solid var(--line);border-left:3px solid var(--accent);border-radius:8px;padding:14px 16px;}
+  .note b{color:var(--ink);}
+  @media(max-width:640px){ .c-cat,.c-prev{display:none;} .frow{grid-template-columns:96px 1fr;} }
+</style>
+</head>
+<body>
+<header class="adm">
+  <div class="wrap adm-bar">
+    <h1>お問い合わせ管理</h1>
+    <span class="count" id="count">0件</span>
+    <span class="sp"></span>
+    
+    <button class="btn" id="export">CSV出力</button>
+    <button class="btn danger" id="clear">すべて削除</button>
+  </div>
+</header>
+
+<div class="wrap">
+  <div class="toolbar">
+    <div class="tabs">
+      <button class="tab active" data-f="all">すべて</button>
+      <button class="tab" data-f="contact">お問い合わせ</button>
+      <button class="tab" data-f="apply">採用エントリー</button>
+    </div>
+    <div class="search"><input id="search" type="search" placeholder="お名前・メール・内容で検索"></div>
+  </div>
+</div>
+
+<main class="wrap">
+  <div class="list" id="list"></div>
+  <div class="note">
+    ※ サイトのフォーム（お問い合わせ・採用エントリー）から送信された内容が、サーバー（Firestore）から読み込まれて表示されます。<br>
+    閲覧には管理パスワードが必要です。パスワードはこの端末のタブを閉じるまで記憶されます。
+  </div>
+</main>
+
+<script>
+(function(){
+  var TYPE={service:'商品・サービス',recruit:'採用・代理店',agency:'代理店募集',trippa:'TRIPPA',other:'その他'};
+  var COURSE={business:'セールスコース',ai:'AIエンジニアコース',intern:'インターンシップ'};
+  var STATUS={student:'学生',worker:'社会人',other:'その他'};
+  var filter='all', q='';
+
+  // API 経由のデータ層（Basic 認証: ユーザー admin / ADMIN_TOKEN）
+  var CACHE=[];
+  function load(){ return CACHE; }
+  function authHeader(){
+    var t=sessionStorage.getItem('og_admin_token');
+    while(t==null){
+      t=window.prompt('管理パスワードを入力してください');
+      if(t==null) return null;
+      t=t.trim();
+      if(!t){ t=null; continue; }
+    }
+    sessionStorage.setItem('og_admin_token', t);
+    return 'Basic '+btoa('admin:'+t);
+  }
+  function refresh(){
+    var h=authHeader();
+    if(h==null){ document.getElementById('list').innerHTML='<div class="empty"><b>認証がキャンセルされました</b>ページを再読み込みしてください。</div>'; return; }
+    fetch('/api/inquiries', { headers:{ Authorization:h } }).then(function(r){
+      if(r.status===401){ sessionStorage.removeItem('og_admin_token'); alert('パスワードが違います。'); refresh(); return null; }
+      if(!r.ok) throw new Error('http '+r.status);
+      return r.json();
+    }).then(function(j){
+      if(!j) return;
+      CACHE=Array.isArray(j.items)?j.items:[];
+      render();
+    }).catch(function(){
+      document.getElementById('list').innerHTML='<div class="empty"><b>読み込みに失敗しました</b>サーバーの状態を確認して再読み込みしてください。</div>';
+    });
+  }
+  function apiDelete(id, done){
+    var h=authHeader(); if(h==null) return;
+    fetch('/api/inquiries/'+encodeURIComponent(id), { method:'DELETE', headers:{ Authorization:h } })
+      .then(function(r){ if(!r.ok) throw new Error('http '+r.status); done(); })
+      .catch(function(){ alert('削除に失敗しました。'); });
+  }
+  function esc(s){ return String(s==null?'':s).replace(/[&<>"]/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c];}); }
+  function fmtDate(iso){ try{ var d=new Date(iso); if(isNaN(d.getTime()))return iso||''; var p=function(n){return (n<10?'0':'')+n;}; return d.getFullYear()+'/'+p(d.getMonth()+1)+'/'+p(d.getDate())+' '+p(d.getHours())+':'+p(d.getMinutes()); }catch(e){ return iso||''; } }
+  function cat(it){ var d=it.data||{}; return it.kind==='apply' ? (COURSE[d.course]||d.course||'—') : (TYPE[d.type]||d.type||'—'); }
+
+  function fields(it){
+    var d=it.data||{};
+    var t=function(x){ return esc(x)||'—'; };
+    var mail=function(x){ return x? '<a href="mailto:'+esc(x)+'">'+esc(x)+'</a>' : '—'; };
+    var link=function(x){ if(!x) return '—'; if(!/^https?:\/\//i.test(x)) return esc(x); return '<a href="'+esc(x)+'" target="_blank" rel="noopener">'+esc(x)+'</a>'; };
+    if(it.kind==='apply') return [
+      ['希望コース', esc(COURSE[d.course]||d.course)||'—'],
+      ['お名前', t(d.name)], ['フリガナ', t(d.kana)],
+      ['メール', mail(d.email)], ['電話', t(d.tel)],
+      ['ご状況', esc(STATUS[d.status]||d.status)||'—'],
+      ['ポートフォリオ', link(d.url)], ['志望動機・自己PR', t(d.message)]
+    ];
+    return [
+      ['ご相談内容', esc(TYPE[d.type]||d.type)||'—'],
+      ['お名前', t(d.name)], ['会社名・店舗名', t(d.company)],
+      ['メール', mail(d.email)], ['電話', t(d.tel)],
+      ['お問い合わせ内容', t(d.message)]
+    ];
+  }
+
+  function render(){
+    var all=load().sort(function(a,b){ return (b.date||'').localeCompare(a.date||''); });
+    document.getElementById('count').textContent=all.length+'件';
+    var items=all.filter(function(it){
+      if(filter!=='all' && it.kind!==filter) return false;
+      if(q){
+        var d=it.data||{};
+        var hay=[d.name,d.email,d.company,d.kana,d.tel,d.message,cat(it)].join(' ').toLowerCase();
+        if(hay.indexOf(q)<0) return false;
+      }
+      return true;
+    });
+    var list=document.getElementById('list');
+    if(!items.length){
+      list.innerHTML='<div class="empty"><b>'+(all.length?'該当する受信はありません':'まだ受信はありません')+'</b>'+(all.length?'絞り込み・検索条件を変えてください。':'フォームから送信されると、ここに一覧表示されます。')+'</div>';
+      return;
+    }
+    list.innerHTML=items.map(function(it){
+      var d=it.data||{};
+      var prev=(d.message||'').replace(/\s+/g,' ').trim();
+      var rows=fields(it).map(function(f){ return '<div class="frow"><div class="k">'+f[0]+'</div><div class="v">'+f[1]+'</div></div>'; }).join('');
+      return '<div class="card" data-id="'+esc(it.id)+'">'+
+        '<div class="card-head">'+
+          '<span class="badge '+(it.kind==='apply'?'apply':'contact')+'">'+(it.kind==='apply'?'採用':'問合せ')+'</span>'+
+          '<span class="c-cat">'+esc(cat(it))+'</span>'+
+          '<span class="c-name">'+(esc(d.name)||'（無記名）')+'</span>'+
+          '<span class="c-prev">'+esc(prev)+'</span>'+
+          '<span class="c-date">'+fmtDate(it.date)+'</span>'+
+          '<span class="c-caret"></span>'+
+        '</div>'+
+        '<div class="card-body">'+rows+
+          '<div class="card-act"><button class="btn danger" data-del="'+esc(it.id)+'">この受信を削除</button></div>'+
+        '</div>'+
+      '</div>';
+    }).join('');
+  }
+
+
+  function exportCsv(){
+    var all=load().sort(function(a,b){ return (b.date||'').localeCompare(a.date||''); });
+    if(!all.length){ alert('出力するデータがありません。'); return; }
+    var cols=['受信日時','区分','分類','お名前','フリガナ','会社名','メール','電話','ご状況','URL','内容'];
+    var qq=function(s){ return '"'+String(s==null?'':s).replace(/"/g,'""')+'"'; };
+    var lines=[cols.map(qq).join(',')];
+    all.forEach(function(it){
+      var d=it.data||{};
+      lines.push([
+        fmtDate(it.date),
+        it.kind==='apply'?'採用エントリー':'お問い合わせ',
+        cat(it), d.name||'', d.kana||'', d.company||'', d.email||'', d.tel||'',
+        (STATUS[d.status]||d.status||''), d.url||'', (d.message||'')
+      ].map(qq).join(','));
+    });
+    var blob=new Blob(['﻿'+lines.join('\r\n')], {type:'text/csv;charset=utf-8;'});
+    var url=URL.createObjectURL(blob);
+    var a=document.createElement('a'); a.href=url; a.download='inquiries.csv';
+    document.body.appendChild(a); a.click(); document.body.removeChild(a); URL.revokeObjectURL(url);
+  }
+
+  document.getElementById('list').addEventListener('click', function(e){
+    var del=e.target.closest('[data-del]');
+    if(del){ e.stopPropagation(); var id=del.getAttribute('data-del'); if(confirm('この受信を削除しますか？')){ apiDelete(id, refresh); } return; }
+    var head=e.target.closest('.card-head');
+    if(head){ head.parentNode.classList.toggle('open'); }
+  });
+  Array.prototype.forEach.call(document.querySelectorAll('.tab'), function(t){
+    t.addEventListener('click', function(){ var a=document.querySelector('.tab.active'); if(a)a.classList.remove('active'); t.classList.add('active'); filter=t.getAttribute('data-f'); render(); });
+  });
+  document.getElementById('search').addEventListener('input', function(){ q=this.value.trim().toLowerCase(); render(); });
+  document.getElementById('clear').addEventListener('click', function(){ alert('一括削除は誤操作防止のため無効化しています。各カードから個別に削除してください。'); });
+
+  document.getElementById('export').addEventListener('click', exportCsv);
+
+  refresh();
+})();
+</script>
+</body>
+</html>

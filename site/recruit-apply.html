@@ -1,0 +1,187 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>採用エントリー｜株式会社OPENGATE</title>
+<meta name="description" content="株式会社OPENGATEの採用エントリーフォーム。ビジネスコース／AIエンジニアコース／インターンを募集しています。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Sans+JP:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body class="light">
+
+<header>
+  <div class="wrap hbar">
+    <a href="index.html" class="logo"><img src="OPENGATE-white.png" alt="OPENGATE"></a>
+    <nav class="main">
+      <a href="recruit.html">採用</a>
+      <div class="navdrop">
+        <a href="services.html">事業内容 <span class="caret"></span></a>
+        <div class="dropmenu">
+          <a href="https://livergate-osaka.com/kaygyoz" target="_blank" rel="noopener"><span class="t">カイギョーズ事業 <span class="en" style="color:var(--accent);font-size:10px;letter-spacing:.1em;">MAIN</span></span><span class="d">店舗・オフィスの開業準備を無料で一括サポート</span></a>
+          <a href="services.html#trippa"><span class="t">TRIPPA(トリッパ)事業</span><span class="d">契約入力だけで自動申込。着金までの歩留を可視化</span></a>
+        </div>
+      </div>
+      <a href="leadership.html">リーダーシップ</a>
+      <a href="about.html">企業情報</a>
+      <a href="contact.html" class="btn btn-primary" style="padding:13px 24px;gap:10px;min-width:0;">お問い合わせ <span class="en">→</span></a>
+    </nav>
+    <button class="burger" id="burger" aria-label="メニュー"><span></span><span></span><span></span></button>
+  </div>
+  <div class="mobile-nav" id="mnav">
+    <a href="recruit.html">採用</a>
+    <a href="services.html">事業内容</a>
+    <a href="leadership.html">リーダーシップ</a>
+    <a href="about.html">企業情報</a>
+    <a href="contact.html" class="btn btn-primary">お問い合わせ <span class="en">→</span></a>
+  </div>
+</header>
+
+<!-- ============ ENTRY FORM ============ -->
+<section class="block">
+  <div class="wrap">
+    <div class="shead reveal" style="margin-bottom:clamp(32px,4.5vh,52px);">
+      <span class="overline">Entry</span>
+      <h2>採用エントリー</h2>
+      <p>ご希望のコースを選び、必要事項をご記入ください。内容を確認のうえ、担当者よりご連絡いたします。</p>
+    </div>
+  </div>
+  <div class="wrap formwrap">
+    <!-- form -->
+    <div>
+      <form class="form" id="applyForm" novalidate>
+        <div class="field">
+          <label for="f-course">希望コース <span class="req">必須</span></label>
+          <select id="f-course" name="course" required>
+            <option value="business">セールスコース</option>
+            <option value="ai">AIエンジニアコース</option>
+            <option value="intern">インターンシップ</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-name">お名前 <span class="req">必須</span></label>
+          <input id="f-name" name="name" type="text" placeholder="山田 太郎" required>
+        </div>
+        <div class="field">
+          <label for="f-kana">フリガナ <span class="opt">任意</span></label>
+          <input id="f-kana" name="kana" type="text" placeholder="ヤマダ タロウ">
+        </div>
+        <div class="field">
+          <label for="f-email">メールアドレス <span class="req">必須</span></label>
+          <input id="f-email" name="email" type="email" placeholder="example@mail.com" required>
+        </div>
+        <div class="field">
+          <label for="f-tel">電話番号 <span class="req">必須</span></label>
+          <input id="f-tel" name="tel" type="tel" placeholder="090-1234-5678" required>
+        </div>
+        <div class="field">
+          <label for="f-status">現在のご状況 <span class="opt">任意</span></label>
+          <select id="f-status" name="status">
+            <option value="">選択してください</option>
+            <option value="student">学生</option>
+            <option value="worker">社会人</option>
+            <option value="other">その他</option>
+          </select>
+        </div>
+        <div class="field">
+          <label for="f-url">ポートフォリオ・GitHub等 <span class="opt">任意</span></label>
+          <input id="f-url" name="url" type="url" placeholder="https://...">
+        </div>
+        <div class="field">
+          <label for="f-msg">志望動機・自己PR <span class="req">必須</span></label>
+          <textarea id="f-msg" name="message" placeholder="志望動機やご自身の強みなどをご記入ください。" required></textarea>
+        </div>
+        <div class="field check">
+          <input id="f-agree" name="agree" type="checkbox" required>
+          <label for="f-agree"><a href="privacy.html">プライバシーポリシー</a>に同意のうえ送信します。</label>
+        </div>
+        <button type="submit" class="btn btn-primary">応募する <span class="en">→</span></button>
+        <p class="formnote">※ ご入力いただいた内容は担当者が確認のうえ、折り返しご連絡いたします。</p>
+      </form>
+
+      <!-- success -->
+      <div class="formdone" id="formDone">
+        <div class="ic"></div>
+        <h3>ご応募ありがとうございます</h3>
+        <p>エントリーを受け付けました。<br>担当者より数日以内にご連絡いたします。今しばらくお待ちください。</p>
+      </div>
+    </div>
+
+    <!-- aside -->
+    <aside>
+      <div class="infocard">
+        <h3>選考の流れ</h3>
+        <p class="sub">エントリー後の大まかな流れです。</p>
+        <div class="inforow"><div class="k">Step 01</div><div class="v">エントリー（本フォーム）</div></div>
+        <div class="inforow"><div class="k">Step 02</div><div class="v">カジュアル面談</div></div>
+        <div class="inforow"><div class="k">Step 03</div><div class="v">選考・面接</div></div>
+        <div class="inforow"><div class="k">Step 04</div><div class="v">内定・入社</div></div>
+      </div>
+    </aside>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap fgrid">
+    <div>
+      <a href="index.html" class="logo"><img src="OPENGATE-white.png" alt="OPENGATE"></a>
+      <p class="addr">株式会社OPENGATE<br>〒550-0015 大阪府大阪市西区南堀江1丁目21-4 Jsビル 9F<br>TEL: 06-7176-5693</p>
+    </div>
+    <div class="fcol">
+      <h4>Sitemap</h4>
+      <a href="services.html">事業内容</a>
+      <a href="recruit.html">採用</a>
+      <a href="leadership.html">リーダーシップ</a>
+      <a href="about.html">企業情報</a>
+      <a href="contact.html">お問い合わせ</a>
+    </div>
+  </div>
+  <div class="wrap fbottom">
+    <div class="links">
+      <a href="privacy.html">プライバシーポリシー</a>
+    </div>
+    <span class="cp">© OPENGATE Inc. All Rights Reserved.</span>
+  </div>
+</footer>
+
+<script src="main.js"></script>
+<script>
+(function(){
+  // 希望コースの自動選択（?course=business/ai/intern）
+  var p = new URLSearchParams(location.search).get('course');
+  if (p) {
+    var s = document.getElementById('f-course');
+    if (s) { for (var i = 0; i < s.options.length; i++) { if (s.options[i].value === p) { s.selectedIndex = i; break; } } }
+  }
+  // 送信（API POST → 完了メッセージ表示）
+  var f = document.getElementById('applyForm');
+  if (f) {
+    f.addEventListener('submit', function (e) {
+      e.preventDefault();
+      if (!f.checkValidity()) { f.reportValidity(); return; }
+      var v = function (id) { var el = document.getElementById(id); return el ? el.value : ''; };
+      var btn = f.querySelector('[type="submit"]');
+      if (btn) { btn.disabled = true; btn.dataset.label = btn.textContent; btn.textContent = '送信中…'; }
+      ogSaveInquiry('apply', {
+        course: v('f-course'), name: v('f-name'), kana: v('f-kana'),
+        email: v('f-email'), tel: v('f-tel'), status: v('f-status'),
+        url: v('f-url'), message: v('f-msg')
+      }).then(function (ok) {
+        if (!ok) {
+          alert(typeof OG_SEND_FAIL !== 'undefined' ? OG_SEND_FAIL : '送信に失敗しました。');
+          if (btn) { btn.disabled = false; btn.textContent = btn.dataset.label; }
+          return;
+        }
+        f.style.display = 'none';
+        var d = document.getElementById('formDone');
+        if (d) d.classList.add('show');
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+      });
+    });
+  }
+})();
+</script>
+</body>
+</html>

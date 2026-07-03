@@ -68,7 +68,7 @@ const Navbar = ({ onLinkClick }: { onLinkClick: (href: string) => void }) => {
     <nav className={`fixed top-0 w-full z-50 transition-all duration-300 ${isScrolled ? 'bg-white/80 backdrop-blur-md border-b border-gray-200 py-2' : 'bg-transparent py-4'}`}>
       <div className="max-w-7xl mx-auto px-6 flex justify-between items-center">
         <div className="flex items-center">
-          <button onClick={() => onLinkClick('/')} className="flex items-center">
+          <button onClick={() => onLinkClick('/kaygyoz')} className="flex items-center">
             <img src="https://res.cloudinary.com/duismpfyp/image/upload/v1773153440/kaygyoz_vdeoj5.png" alt="カイギョーズ" className="h-10 md:h-12 w-auto" />
           </button>
         </div>
@@ -679,7 +679,7 @@ const Footer = ({ onLinkClick }: { onLinkClick: (href: string) => void }) => {
         <div className="grid grid-cols-2 md:grid-cols-4 gap-12 mb-20">
           <div className="col-span-2 flex flex-col items-center md:items-start text-center md:text-left">
             <div className="mb-6">
-              <button onClick={() => onLinkClick('/')}>
+              <button onClick={() => onLinkClick('/kaygyoz')}>
                 <img src="https://res.cloudinary.com/duismpfyp/image/upload/v1773153440/kaygyoz_vdeoj5.png" alt="カイギョーズ" className="h-20 md:h-24 w-auto" />
               </button>
             </div>
@@ -995,7 +995,7 @@ function usePageMeta(meta: RouteMeta) {
       ?.setAttribute('content', meta.description);
     document.head
       .querySelector('link[rel="canonical"]')
-      ?.setAttribute('href', ORIGIN + meta.path);
+      ?.setAttribute('href', ORIGIN + (meta.canonicalPath ?? meta.path));
     window.scrollTo(0, 0);
   }, [meta]);
 }
@@ -1034,25 +1034,26 @@ function Home() {
 function ServicesRoute() {
   const navigate = useNavigate();
   usePageMeta(META['/services']);
-  return <ServiceDetailPage onBack={() => navigate('/')} />;
+  return <ServiceDetailPage onBack={() => navigate('/kaygyoz')} />;
 }
 
 function CasesRoute() {
   const navigate = useNavigate();
   usePageMeta(META['/cases']);
-  return <CaseStudiesPage onBack={() => navigate('/')} />;
+  return <CaseStudiesPage onBack={() => navigate('/kaygyoz')} />;
 }
 
 function ContactRoute() {
   const navigate = useNavigate();
   usePageMeta(META['/contact']);
-  return <LineContactView onBack={() => navigate('/')} />;
+  return <LineContactView onBack={() => navigate('/kaygyoz')} />;
 }
 
 export default function App() {
   return (
     <Routes>
       <Route path="/" element={<Home />} />
+      <Route path="/kaygyoz" element={<Home />} />
       <Route path="/services" element={<ServicesRoute />} />
       <Route path="/cases" element={<CasesRoute />} />
       <Route path="/contact" element={<ContactRoute />} />
