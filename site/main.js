@@ -28,7 +28,7 @@ function ogSaveInquiry(kind, data) {
   }).then(function (r) { return r.ok; }).catch(function () { return false; });
 }
 window.ogSaveInquiry = ogSaveInquiry;
-var OG_SEND_FAIL = '送信に失敗しました。お手数ですが livergate0804@gmail.com までメールでご連絡ください。';
+var OG_SEND_FAIL = '送信に失敗しました。お手数ですが info@livergate-osaka.com までメールでご連絡ください。';
 
 // contact form (no backend — save locally & show confirmation)
 var form = document.getElementById('contactForm');
