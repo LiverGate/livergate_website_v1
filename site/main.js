@@ -137,8 +137,8 @@ if (form) {
     // 王冠（がく）：上部のリング状ベース＋放射状の尖り（スパイク）でザクロの王冠を表現
     var SPIKES = 7;                  // 尖りの本数
     var crownH = 0.28 * R;           // 尖りの高さ（実に対して小ぶりな冠）
-    var GAP = 0.02 * R;              // 実と王冠の隙間＝ほぼ密着
-    var baseY = -(R * BODY_H + GAP); // 実の上端に接して王冠ベース（yマイナス＝上）
+    var GAP = crownH / 1.618;        // 実と王冠の隙間＝王冠高さ ÷ 黄金比(φ)
+    var baseY = -(R * BODY_H + GAP); // 実の上端から黄金比ぶん隙間を空けて王冠ベース（yマイナス＝上）
     var baseR = 0.26 * R;            // ベースリング半径
     var tipR = 0.34 * R;             // 尖り先端の外向き半径（わずかに外へ開く）
     if (Math.random() < 0.30) {
@@ -461,7 +461,7 @@ if (form) {
         var hS=1.10-0.55*Math.pow(u,4);
         return {x:sp*Math.cos(th)*rr*hS, y:cph*rr*BODY_H};
       }
-      var SPIKES=7, crownH=0.28*R, GAP=0.02*R, baseY=-(R*BODY_H+GAP), baseR=0.26*R, tipR=0.34*R;
+      var SPIKES=7, crownH=0.28*R, GAP=crownH/1.618, baseY=-(R*BODY_H+GAP), baseR=0.26*R, tipR=0.34*R;
       if(Math.random()<0.30){ var ra=Math.random()*Math.PI*2, rr2=baseR*(0.88+Math.random()*0.24);
         return {x:Math.cos(ra)*rr2, y:baseY+Math.random()*(0.12*R)}; }
       var si=(Math.random()*SPIKES)|0, sa=(si/SPIKES)*Math.PI*2+Math.PI/SPIKES, st=Math.pow(Math.random(),1.3), sRad=baseR+(tipR-baseR)*Math.pow(st,1.6);
