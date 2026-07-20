@@ -174,6 +174,38 @@ async function startServer() {
     }
   });
 
+  // Canonical URL shape. Every page must answer on exactly one URL, or Search
+  // Console reports the variants as duplicates of each other ("重複・正規未選択").
+  // Runs before every static mount so it covers site/*.html and dist/ alike:
+  //   /index.html          -> /            (both served site/index.html byte-identically)
+  //   /kaygyoz/index.html  -> /kaygyoz     (express.static serves an explicit index.html
+  //                                         even with index:false — that only turns off
+  //                                         *directory* index lookup)
+  //   /services/           -> /services    (the catch-all below happily served both)
+  app.use((req, res, next) => {
+    if (req.method !== "GET" && req.method !== "HEAD") return next();
+    // Fold until stable: stripping a trailing slash can expose an "/index.html"
+    // the anchored rule already passed over ("/index.html/" needs both rules),
+    // and one 301 per request beats a chain. Each pass only removes characters,
+    // so this always terminates.
+    let p = req.path;
+    for (let prev; p !== prev; ) {
+      prev = p;
+      p = p.replace(/\/index\.html$/, "/").replace(/\/{2,}/g, "/");
+      if (p.length > 1) p = p.replace(/\/+$/, "");
+    }
+    if (p === req.path) return next();
+    // Never emit a Location a browser can read as an authority: "/\evil.com"
+    // resolves to https://evil.com/ under the WHATWG URL rules. Anything that
+    // isn't a plain single-slash path is not a URL we serve — send it home.
+    if (!/^\/(?![/\\])/.test(p)) p = "/";
+    // Take the query from the raw URL rather than offsetting by req.path.length:
+    // on an absolute-form request line ("GET http://host/p HTTP/1.1") req.url is
+    // the whole URI while req.path is only the pathname, so the offset misaligns.
+    const q = req.url.indexOf("?");
+    res.redirect(301, p + (q === -1 ? "" : req.url.slice(q)));
+  });
+
   // OpenGate corporate site (static) at the root: /, *.html and its assets.
   // Mounted before the app assets/routes so "/" serves the corporate top page;
   // the Kaygyoz app lives at /kaygyoz (+ /services, /cases, /contact).
@@ -199,7 +231,8 @@ async function startServer() {
       express.static(distDir, {
         index: false,
         // Don't 301 /services -> /services/; the catch-all serves the
-        // prerendered file directly so canonical URLs stay slash-free.
+        // prerendered file directly, and the normalizer above is what keeps
+        // canonical URLs slash-free.
         redirect: false,
         setHeaders: (res, filePath) => {
           if (filePath.includes(`${path.sep}assets${path.sep}`)) {
@@ -221,11 +254,14 @@ async function startServer() {
       }
       res.setHeader("Cache-Control", "no-cache");
       // Serve the prerendered HTML for this route (dist/<route>/index.html) if it
-      // exists; otherwise fall back to the home shell. sendFile with `root`
-      // rejects path traversal, so a bad path safely lands on the fallback.
+      // exists. sendFile with `root` rejects path traversal, so a bad path safely
+      // lands on the fallback. Every client route in App.tsx is prerendered, so an
+      // unresolved path is a real 404: still render the shell (React's "*" route
+      // shows the home page) but say 404, or every typo'd URL becomes another
+      // 200-serving duplicate of /kaygyoz.
       res.sendFile(path.join(req.path, "index.html"), { root: distDir }, (err) => {
         if (err) {
-          res.sendFile(path.join(distDir, "index.html"));
+          res.status(404).sendFile(path.join(distDir, "index.html"));
         }
       });
     });

@@ -1,5 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- OPENGATE コーポレートサイト (site/*.html)。admin.html は noindex のため除外。 -->
+  <url>
+    <loc>https://livergate-osaka.com/</loc>
+    <lastmod>2026-07-20</lastmod>
+  </url>
+  <url>
+    <loc>https://livergate-osaka.com/services.html</loc>
+    <lastmod>2026-07-20</lastmod>
+  </url>
+  <url>
+    <loc>https://livergate-osaka.com/leadership.html</loc>
+    <lastmod>2026-07-20</lastmod>
+  </url>
+  <url>
+    <loc>https://livergate-osaka.com/about.html</loc>
+    <lastmod>2026-07-20</lastmod>
+  </url>
+  <url>
+    <loc>https://livergate-osaka.com/recruit.html</loc>
+    <lastmod>2026-07-20</lastmod>
+  </url>
+  <url>
+    <loc>https://livergate-osaka.com/recruit-apply.html</loc>
+    <lastmod>2026-07-20</lastmod>
+  </url>
+  <url>
+    <loc>https://livergate-osaka.com/news.html</loc>
+    <lastmod>2026-07-20</lastmod>
+  </url>
+  <url>
+    <loc>https://livergate-osaka.com/contact.html</loc>
+    <lastmod>2026-07-20</lastmod>
+  </url>
+  <url>
+    <loc>https://livergate-osaka.com/privacy.html</loc>
+    <lastmod>2026-07-20</lastmod>
+  </url>
+
+  <!-- カイギョーズ (React SPA / prerender)。URL は末尾スラッシュなしが正規。 -->
   <url>
     <loc>https://livergate-osaka.com/kaygyoz</loc>
     <lastmod>2026-06-19</lastmod>
