@@ -123,16 +123,24 @@ if (form) {
   // 厚みdの位置に立体的なz（中心ほど厚い・前後に充填）
   function silZ(d) { return (Math.random() * 2 - 1) * SILT * Math.sqrt(d); }
 
-  // ボディ（球体）＋上部に独立した3枚の葉。[x,y,z,seed] を返す
-  var BODY_H = 0.86;                 // 実の縦方向スケール（<1＝横に広い丸み）
+  // ボディ（球体）＋上部に独立した3枚の葉。[x,y,z,seed,法線ずれxyz] を返す
+  var BODY_H = 0.93;                 // 実の縦方向スケール（<1＝横に広い丸み）
+  var LOBES = 7;                     // 縦の稜（房の膨らみ）の数＝王冠の尖りと同数
+  var LOBE_AMP = 0.095;              // 稜の張り出し量（半径比）
   function makeFruitPoint() {
     if (Math.random() < 0.83) {                       // ボディ（ザクロ形：表面寄りで密に）
       var th = Math.random() * Math.PI * 2, ph = Math.acos(2 * Math.random() - 1);
-      var rr = Math.pow(Math.random(), 0.4) * R, sp = Math.sin(ph), cph = Math.cos(ph);
+      var rr = Math.pow(Math.random(), 0.30) * R, sp = Math.sin(ph), cph = Math.cos(ph);
       var u = (1 - cph) * 0.5;                         // 0=底（下） … 1=上（王冠側）
-      // ザクロのプロファイル：中腹まで真円を保ち、首元だけ絞って王冠へ
-      var hS = 1.10 - 0.55 * Math.pow(u, 4);
-      return [sp * Math.cos(th) * rr * hS, cph * rr * BODY_H, sp * Math.sin(th) * rr * hS, Math.random() < 0.07];
+      // ザクロのプロファイル：ほぼ真円。首元だけゆるく絞って王冠へ
+      var hS = 1.06 - 0.38 * Math.pow(u, 5);
+      // 縦の稜：赤道で最も強く、上下の極では消える（w）。半径を波打たせて凹凸を作る
+      var w = Math.pow(Math.sin(Math.PI * clamp01(u)), 0.6);
+      var bump = 1 + LOBE_AMP * Math.cos(LOBES * th) * w;
+      // 稜の傾きぶんだけ法線を接線方向へ倒す＝凹凸が陰影に出る（これが無いと形だけで陰影が付かない）
+      var tilt = LOBE_AMP * LOBES * Math.sin(LOBES * th) * w;
+      return [sp * Math.cos(th) * rr * hS * bump, cph * rr * BODY_H, sp * Math.sin(th) * rr * hS * bump,
+              Math.random() < 0.07, -Math.sin(th) * tilt, 0, Math.cos(th) * tilt];
     }
     // 王冠（がく）：上部のリング状ベース＋放射状の尖り（スパイク）でザクロの王冠を表現
     var SPIKES = 7;                  // 尖りの本数
@@ -171,14 +179,15 @@ if (form) {
       : Math.max(10000, Math.min(21000, Math.floor((W * H) / 40)));
     parts = [];
     cx = W * 0.5; cy = H * 0.52; R = Math.max(mobile ? 68 : 50, Math.min(W, H) * (mobile ? 0.22 : 0.13));
-    function add(px, py, pz, sz, seed) {
+    function add(px, py, pz, sz, seed, bx, by, bz) {
       parts.push({ x: px, y: py, z: pz, size: sz, seed: seed, delay: Math.random() * 0.3,
+        bx: bx || 0, by: by || 0, bz: bz || 0,
         sx: 0, sy: 0, _z: 0, _x: 0, _y: 0, _s: 0, _a: 0, _c: AC, _fadein: 1 });
     }
     // ボディ（球体）＋3枚の葉を生成
     for (var i = 0; i < N; i++) {
       var pt = makeFruitPoint();
-      add(pt[0], pt[1], pt[2], rnd(0.5, 1.1), pt[3]);
+      add(pt[0], pt[1], pt[2], rnd(0.5, 1.1), pt[3], pt[4], pt[5], pt[6]);
     }
     order = parts.map(function (_, i) { return i; });
     maxParts = parts.length + (W < 760 ? 3000 : 5500);   // タッチ/カーソルで増やせる上限（密度UP）
@@ -192,6 +201,7 @@ if (form) {
     var pt = makeFruitPoint();
     parts.push({ x: pt[0], y: pt[1], z: pt[2], size: rnd(0.5, 1.1),
       seed: pt[3], delay: 0, sx: 0, sy: 0,
+      bx: pt[4] || 0, by: pt[5] || 0, bz: pt[6] || 0,
       _z: 0, _x: 0, _y: 0, _s: 0, _a: 0, _c: AC, _fadein: 0 });
     order.push(parts.length - 1);
   }
@@ -315,20 +325,27 @@ if (form) {
       } else { x = tx; y = ty; a = 1; }
       var len = Math.sqrt(x2 * x2 + y2 * y2 + z2 * z2) || 1;
       var nx = x2 / len, ny = y2 / len, nz = z2 / len;
+      // 稜の法線ずれを位置と同じ回転にかけて合成＝凹凸が光の当たり方に出る
+      if (p.bx || p.bz) {
+        var by1 = p.by * cosT - p.bz * sinT, bz1 = p.by * sinT + p.bz * cosT;
+        nx += p.bx * cosY + bz1 * sinY; ny += by1; nz += -p.bx * sinY + bz1 * cosY;
+        var nl = Math.sqrt(nx * nx + ny * ny + nz * nz) || 1;
+        nx /= nl; ny /= nl; nz /= nl;
+      }
       var diff = nx * Lx + ny * Ly + nz * Lz; if (diff < 0) diff = 0;
       var sd = nx * Hx + ny * Hy + nz * Hz; if (sd < 0) sd = 0;
       var spec = Math.pow(sd, 22);                              // 締まったグロッシーハイライト
       var depth = clamp01((z2 / depthN + 1) * 0.5);            // 0=奥,1=手前
-      var lum = (0.5 + 0.62 * diff) * beatB;
+      var lum = (0.30 + 0.88 * diff) * beatB;                   // 影側を落として陰影を強く＝立体感
       // 鮮やかな赤：影側も赤を残し、ハイライトは柔らかい白
       var baseR = p.seed ? 240 : 224, baseG = p.seed ? 84 : 46, baseB = p.seed ? 96 : 52;
-      var tc = clamp01(0.5 + 0.55 * diff);
-      var r = 150 + (baseR - 150) * tc, g2 = 30 + (baseG - 30) * tc, b = 36 + (baseB - 36) * tc;
+      var tc = clamp01(0.34 + 0.70 * diff);
+      var r = 96 + (baseR - 96) * tc, g2 = 16 + (baseG - 16) * tc, b = 22 + (baseB - 22) * tc;
       var sw = clamp01(spec * 1.3);
       r += (255 - r) * sw; g2 += (210 - g2) * sw; b += (212 - b) * sw;
       p._x = x; p._y = y; p._z = z2;
-      p._s = p.size * (0.6 + 0.55 * depth) + spec * 1.1;
-      p._a = clamp01((p.seed ? 0.72 : 0.64) * lum + 0.45 * spec) * a * (p._fadein < 1 ? (p._fadein += 0.05) : 1);
+      p._s = p.size * (0.48 + 0.82 * depth) + spec * 1.1;       // 手前ほど大きく＝被写界の奥行き
+      p._a = clamp01((p.seed ? 0.78 : 0.70) * lum + 0.45 * spec) * (0.60 + 0.40 * depth) * a * (p._fadein < 1 ? (p._fadein += 0.05) : 1);
       p._c = 'rgb(' + (r | 0) + ',' + (g2 | 0) + ',' + (b | 0) + ')';
     }
 
