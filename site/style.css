@@ -583,7 +583,7 @@
   .rec-hero-msg-in{width:fit-content;text-align:center;}
   .rec-hero-msg p{font-size:clamp(11px,0.82cqw,13px);line-height:2.0;margin:0 0 1.05em;color:#111;font-weight:700;letter-spacing:0;}
   .rec-hero-msg p:last-child{margin:0;}
-  .rec-hero-msg p.rec-hero-sign{margin:clamp(6px,1.2vh,12px) 0 0;font-size:clamp(10px,0.72cqw,12px);color:#b3b3b3;font-weight:400;letter-spacing:.24em;text-align:right;}
+  .rec-hero-msg p.rec-hero-sign{margin:clamp(6px,1.2vh,12px) 0 0;font-size:clamp(10px,0.72cqw,12px);color:#b3b3b3;font-weight:400;letter-spacing:.24em;text-align:center;}
   .rec-hero-photo{position:relative;width:100vw;margin-left:calc(50% - 50vw);margin-right:calc(50% - 50vw);aspect-ratio:2000/2081;background:url(recruit-hero.jpg) center/cover no-repeat;}
   .rec-hero-photo::before{content:"";position:absolute;top:0;left:0;right:0;height:26%;background:linear-gradient(180deg,#fff 0%,#fff 12%,rgba(255,255,255,0) 100%);}
   @container (max-width:760px){
