@@ -124,20 +124,21 @@ if (form) {
   function silZ(d) { return (Math.random() * 2 - 1) * SILT * Math.sqrt(d); }
 
   // ボディ（球体）＋上部に独立した3枚の葉。[x,y,z,seed] を返す
+  var BODY_H = 0.86;                 // 実の縦方向スケール（<1＝横に広い丸み）
   function makeFruitPoint() {
     if (Math.random() < 0.83) {                       // ボディ（ザクロ形：表面寄りで密に）
       var th = Math.random() * Math.PI * 2, ph = Math.acos(2 * Math.random() - 1);
       var rr = Math.pow(Math.random(), 0.4) * R, sp = Math.sin(ph), cph = Math.cos(ph);
       var u = (1 - cph) * 0.5;                         // 0=底（下） … 1=上（王冠側）
-      // ザクロのプロファイル：中央やや下が最も太く、上端はくびれ、底は丸く絞る
-      var hS = 0.72 + 0.31 * Math.sin(Math.PI * clamp01(u * 0.92 + 0.06)) - 0.14 * Math.pow(u, 3);
-      return [sp * Math.cos(th) * rr * hS, cph * rr * 0.96, sp * Math.sin(th) * rr * hS, Math.random() < 0.07];
+      // ザクロのプロファイル：ほぼ球体で横に少し広く、底は丸くふっくら、上端だけくびれて王冠へ
+      var hS = 1.12 - 0.60 * Math.pow(u, 2.6);
+      return [sp * Math.cos(th) * rr * hS, cph * rr * BODY_H, sp * Math.sin(th) * rr * hS, Math.random() < 0.07];
     }
     // 王冠（がく）：上部のリング状ベース＋放射状の尖り（スパイク）でザクロの王冠を表現
     var SPIKES = 6;                  // 尖りの本数
     var crownH = 0.46 * R;           // 尖りの高さ
     var GAP = crownH / 1.618;        // 実と王冠の隙間＝王冠高さ ÷ 黄金比(φ)
-    var baseY = -(R + GAP);          // 実の上端から黄金比ぶん隙間を空けて王冠ベース（yマイナス＝上）
+    var baseY = -(R * BODY_H + GAP); // 実の上端から黄金比ぶん隙間を空けて王冠ベース（yマイナス＝上）
     var baseR = 0.22 * R;            // ベースリング半径
     var tipR = 0.44 * R;             // 尖り先端の外向き半径（外へ開く＝少し開いた王冠）
     if (Math.random() < 0.30) {
@@ -453,13 +454,14 @@ if (form) {
     if(btn){btn.addEventListener('mouseenter',function(){hoverT=1;});btn.addEventListener('mouseleave',function(){hoverT=0;});btn.addEventListener('focus',function(){hoverT=1;});btn.addEventListener('blur',function(){hoverT=0;});}
     var cols=['#C7303C','#d13341','#e0454f','#b02832','#a5232c','#ef6b72'];
     function c01(x){return x<0?0:(x>1?1:x);}
+    var BODY_H=0.86;                 // 実の縦方向スケール（<1＝横に広い丸み）
     function fruitPt(){
       if(Math.random()<0.83){
         var th=Math.random()*Math.PI*2, ph=Math.acos(2*Math.random()-1), rr=Math.pow(Math.random(),0.4)*R, sp=Math.sin(ph), cph=Math.cos(ph), u=(1-cph)*0.5;
-        var hS=0.72+0.31*Math.sin(Math.PI*c01(u*0.92+0.06))-0.14*Math.pow(u,3);
-        return {x:sp*Math.cos(th)*rr*hS, y:cph*rr*0.96};
+        var hS=1.12-0.60*Math.pow(u,2.6);
+        return {x:sp*Math.cos(th)*rr*hS, y:cph*rr*BODY_H};
       }
-      var SPIKES=6, crownH=0.46*R, GAP=crownH/1.618, baseY=-(R+GAP), baseR=0.22*R, tipR=0.44*R;
+      var SPIKES=6, crownH=0.46*R, GAP=crownH/1.618, baseY=-(R*BODY_H+GAP), baseR=0.22*R, tipR=0.44*R;
       if(Math.random()<0.30){ var ra=Math.random()*Math.PI*2, rr2=baseR*(0.88+Math.random()*0.24);
         return {x:Math.cos(ra)*rr2, y:baseY+Math.random()*(0.12*R)}; }
       var si=(Math.random()*SPIKES)|0, sa=(si/SPIKES)*Math.PI*2+Math.PI/SPIKES, st=Math.pow(Math.random(),1.3), sRad=baseR+(tipR-baseR)*Math.pow(st,1.6);
